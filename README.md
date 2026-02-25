@@ -24,7 +24,7 @@
 1. **下载源码**:
 将此仓库克隆到本地，或者下载 ZIP 压缩包并解压。
 ```bash
-git clone https://github.com/你的用户名/gemini-chat-outline.git
+git clone (https://github.com/Burning0322/Gemini-Extension.git)
 
 ```
 
