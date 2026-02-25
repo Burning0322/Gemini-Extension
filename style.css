@@ -1,0 +1,145 @@
+/* style.css - v15.0 日夜双色版 */
+
+#gemini-toc-container {
+  position: fixed;
+  top: 50%;
+  
+  /* 1. 核心魔法：默认将面板向右移出屏幕，只留出 15px 的宽度作为“鼠标感应区” */
+  transform: translate(calc(100% - 15px), -50%);
+  right: 0; /* 配合 transform，将其固定在最右侧 */
+  
+  width: 250px;
+  max-height: 80vh; 
+  
+  /* 2. 可选优化：因为你原本是透明背景，移出屏幕后可能完全找不到触发区。
+        这里加了一个极淡的通用灰色背景和左侧圆角，日夜模式都适用。*/
+  background: rgba(128, 128, 128, 0.08); 
+  border-radius: 12px 0 0 12px;
+  padding-left: 10px; /* 防止内部文字贴边 */
+
+  display: flex;
+  flex-direction: column;
+  z-index: 9999;
+  font-family: 'Google Sans', 'Roboto Mono', monospace;
+  
+  /* 3. 默认时降低透明度，减少视觉干扰 */
+  opacity: 0.3; 
+  
+  /* 4. 添加 transform 的过渡动画，实现丝滑的“滑出”效果 */
+  transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.4s ease;
+}
+
+#gemini-toc-container:hover {
+  /* 5. 鼠标靠近那 15px 的感应区时，面板向左滑出，并停在距离右侧边缘 20px 的位置 */
+  transform: translate(-20px, -50%);
+  
+  /* 恢复完全不透明 */
+  opacity: 1.0; 
+  
+  /* 悬停时稍微加深一点背景，提升目录的阅读体验 */
+  background: rgba(128, 128, 128, 0.15); 
+}
+
+/* --- 头部默认样式 (浅色模式下) --- */
+#gemini-toc-header {
+  padding-bottom: 8px;
+  margin-bottom: 5px;
+  /* 默认黑线 */
+  border-bottom: 2px solid #202124; 
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: border-color 0.3s;
+}
+
+.header-title {
+  font-size: 14px;
+  font-weight: 900;
+  /* 默认黑字 */
+  color: #202124; 
+  text-transform: uppercase;
+  transition: color 0.3s;
+}
+
+/* --- 时钟样式 --- */
+#toc-realtime-clock {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 18px;
+  font-weight: 700;
+  color: #1a73e8; /* 蓝色保持不变，因为黑白背景都好看 */
+  background: rgba(26, 115, 232, 0.1);
+  padding: 2px 6px;
+  border-radius: 4px;
+  letter-spacing: 1px;
+}
+
+/* 列表容器 */
+#gemini-toc-list {
+  overflow-y: auto; 
+  padding-right: 5px; 
+  scrollbar-width: none; 
+}
+#gemini-toc-list::-webkit-scrollbar {
+  display: none;
+}
+
+/* --- 目录项默认样式 (浅色模式下) --- */
+.toc-item {
+  display: block;
+  padding: 8px 0 8px 20px;
+  position: relative;
+  
+  font-size: 15px;    
+  font-weight: 700;   
+  /* 默认深灰字 */
+  color: #202124;     
+  
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: all 0.2s;
+  border-radius: 4px;
+}
+
+.toc-item::before {
+  content: '•'; 
+  position: absolute;
+  left: 5px;
+  top: 50%;
+  transform: translateY(-55%);
+  font-size: 18px;
+  color: #1a73e8;
+}
+
+.toc-item:hover {
+  color: #1a73e8; 
+  transform: translateX(-3px); 
+}
+
+/* ========================================= */
+/* 🌑 深色模式 (Dark Mode) 适配       */
+/* ========================================= */
+
+/* 当容器被加上 dark-mode 类时，应用以下样式 */
+
+#gemini-toc-container.dark-mode .header-title {
+  color: #e8eaed; /* 变成灰白色 */
+}
+
+#gemini-toc-container.dark-mode #gemini-toc-header {
+  border-bottom: 2px solid #e8eaed; /* 分割线变白 */
+}
+
+#gemini-toc-container.dark-mode .toc-item {
+  color: #bdc1c6; /* 变成浅灰色 */
+  text-shadow: none; /* 去掉之前的白色描边，防止在黑底上有毛边 */
+}
+
+#gemini-toc-container.dark-mode .toc-item:hover {
+  color: #8ab4f8; /* 悬停变成亮蓝色 (更适合深色背景) */
+}
+
+#gemini-toc-container.dark-mode .toc-item::before {
+  color: #8ab4f8; /* 圆点也变成亮蓝 */
+}

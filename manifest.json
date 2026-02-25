@@ -1,0 +1,14 @@
+{
+  "manifest_version": 3,
+  "name": "Gemini Chat Outline",
+  "version": "1.0",
+  "description": "为 Gemini 聊天页面添加右侧目录导航",
+  "permissions": [],
+  "content_scripts": [
+    {
+      "matches": ["https://gemini.google.com/*"],
+      "js": ["content.js"],
+      "css": ["style.css"]
+    }
+  ]
+}
